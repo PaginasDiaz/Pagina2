@@ -1,0 +1,29 @@
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used files
+$RECYCLE.BIN/
+
+# VSCode settings folder
+.vscode/
+
+# Node modules (if any)
+node_modules/
+
+# Logs
+*.log
+
+# Mac system files
+.DS_Store
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore image files if you want to keep repo size small (optional)
+# Uncomment the following line if you want to ignore images
+# Imagenes/
