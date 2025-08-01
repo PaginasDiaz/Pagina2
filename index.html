@@ -6,7 +6,7 @@
     <title>Tienda en Línea KennelDiaz</title>
     <link rel="stylesheet" href="styles.css" />
     <script>
-        // Simple cart functionality
+        // Simple cart functionality and navigation
         document.addEventListener('DOMContentLoaded', () => {
             const cart = [];
             const cartCount = document.getElementById('cart-count');
@@ -14,8 +14,13 @@
             const cartTotal = document.getElementById('cart-total');
             const cartSection = document.getElementById('cart');
             const productsSection = document.getElementById('products');
+            const contactSection = document.getElementById('contact');
+            const homeSection = document.getElementById('home');
             const cartLink = document.getElementById('cart-link');
             const closeCartBtn = document.getElementById('close-cart');
+            const homeLink = document.getElementById('home-link');
+            const productsLink = document.getElementById('products-link');
+            const contactLink = document.getElementById('contact-link');
 
             function updateCartUI() {
                 cartCount.textContent = cart.length;
@@ -50,20 +55,41 @@
                 });
             });
 
+            function showSection(section) {
+                homeSection.style.display = 'none';
+                productsSection.style.display = 'none';
+                contactSection.style.display = 'none';
+                cartSection.style.display = 'none';
+                section.style.display = 'block';
+            }
+
+            homeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection(homeSection);
+            });
+
+            productsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection(productsSection);
+            });
+
+            contactLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection(contactSection);
+            });
+
             cartLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                productsSection.style.display = 'none';
-                cartSection.style.display = 'block';
+                showSection(cartSection);
             });
 
             closeCartBtn.addEventListener('click', () => {
-                cartSection.style.display = 'none';
-                productsSection.style.display = 'block';
+                showSection(productsSection);
             });
 
             // Initialize
             updateCartUI();
-            cartSection.style.display = 'none';
+            showSection(homeSection);
         });
     </script>
 </head>
