@@ -3,18 +3,79 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tienda KennelDiaz</title>
+    <title>Tienda en Línea KennelDiaz</title>
     <link rel="stylesheet" href="styles.css" />
+    <script>
+        // Simple cart functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = [];
+            const cartCount = document.getElementById('cart-count');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            const cartSection = document.getElementById('cart');
+            const productsSection = document.getElementById('products');
+            const cartLink = document.getElementById('cart-link');
+            const closeCartBtn = document.getElementById('close-cart');
+
+            function updateCartUI() {
+                cartCount.textContent = cart.length;
+                cartItemsContainer.innerHTML = '';
+                let total = 0;
+                cart.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                    const removeBtn = document.createElement('button');
+                    removeBtn.textContent = 'Eliminar';
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.onclick = () => {
+                        cart.splice(index, 1);
+                        updateCartUI();
+                    };
+                    li.appendChild(removeBtn);
+                    cartItemsContainer.appendChild(li);
+                    total += item.price;
+                });
+                cartTotal.textContent = total.toFixed(2);
+            }
+
+            document.querySelectorAll('.buy-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const productCard = button.closest('.product-card');
+                    const name = productCard.querySelector('h3').textContent;
+                    const priceText = productCard.querySelector('.price').textContent;
+                    const price = parseFloat(priceText.replace('$', ''));
+                    cart.push({ name, price });
+                    updateCartUI();
+                    alert(`${name} agregado al carrito.`);
+                });
+            });
+
+            cartLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                productsSection.style.display = 'none';
+                cartSection.style.display = 'block';
+            });
+
+            closeCartBtn.addEventListener('click', () => {
+                cartSection.style.display = 'none';
+                productsSection.style.display = 'block';
+            });
+
+            // Initialize
+            updateCartUI();
+            cartSection.style.display = 'none';
+        });
+    </script>
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="logo">Tienda KennelDiaz</div>
             <ul class="nav-links">
-                <li><a href="#home">Inicio</a></li>
-                <li><a href="#products">Productos</a></li>
-                <li><a href="#contact">Contacto</a></li>
-                <li><a href="#cart" class="cart-link">Carrito 🛒</a></li>
+                <li><a href="#home" id="home-link">Inicio</a></li>
+                <li><a href="#products" id="products-link">Productos</a></li>
+                <li><a href="#contact" id="contact-link">Contacto</a></li>
+                <li><a href="#" id="cart-link" class="cart-link">Carrito 🛒 (<span id="cart-count">0</span>)</a></li>
             </ul>
         </nav>
         <div class="header-content" id="home">
@@ -40,6 +101,13 @@
                 </div>
                 <!-- Más productos pueden ser añadidos aquí -->
             </div>
+        </section>
+        <section id="cart" class="cart-section">
+            <h2>Tu Carrito</h2>
+            <ul id="cart-items"></ul>
+            <p>Total: $<span id="cart-total">0.00</span></p>
+            <button id="close-cart">Seguir comprando</button>
+            <button id="checkout-btn" disabled>Finalizar compra</button>
         </section>
         <section id="contact" class="contact-section">
             <h2>Contacto y Soporte</h2>
