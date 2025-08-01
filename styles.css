@@ -246,6 +246,45 @@ footer {
     }
 }
 
+/* Very small devices adjustments */
+@media (max-width: 400px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    nav .logo {
+        font-size: 1.4rem;
+    }
+    nav .nav-links li a {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.8rem;
+    }
+    .product-card h3 {
+        font-size: 1.2rem;
+    }
+    .product-card .price {
+        font-size: 1rem;
+    }
+    .buy-button {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+    .product-card img {
+        height: 120px;
+    }
+    .cart-section {
+        padding: 0.8rem;
+        margin: 0.5rem;
+    }
+    #cart-items li {
+        font-size: 0.9rem;
+    }
+    #close-cart,
+    #checkout-btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
 /* Cart section improvements */
 .cart-section {
     background: rgba(0, 0, 0, 0.6);
