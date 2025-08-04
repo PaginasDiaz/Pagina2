@@ -2,8 +2,389 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Tienda KennelDiaz - Móvil</title>
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.4;
+            font-size: 16px;
+        }
+
+        .header {
+            background: #000;
+            color: white;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: background 0.3s;
+        }
+
+        .nav-item.active {
+            background: #333;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .cart-count {
+            background: white;
+            color: #ff4444;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+
+        main {
+            margin-top: 70px;
+            padding: 10px;
+        }
+
+        section {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            max-width: 100%;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .product-card:active {
+            transform: scale(0.98);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #ff4444;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            background: #000;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart-btn:active {
+            background: #333;
+        }
+
+        .cart-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: bold;
+            display: block;
+        }
+
+        .item-price {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background: #f0f0f0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .quantity-btn:active {
+            background: #ddd;
+        }
+
+        .remove-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .cart-total {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ff4444;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #00a884;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .contact-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 10px;
+            background: #00a884;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .footer {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu {
+                gap: 10px;
+                font-size: 0.9em;
+            }
+            
+            .product-card img {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">KennelDiaz</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item active">
+                        <a href="#" onclick="showSection('products')">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" onclick="showSection('contact')">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="cart-icon" onclick="showSection('cart')">
+                            Carrito 🛒 <span class="cart-count" id="cart-count">0</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="products">
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="Imagenes/Historia de Instagram Frase de Gimnasio Tipográfico Verde y Negro.jpg" alt="Producto 1" />
+                    <div class="product-info">
+                        <h3 class="product-name">Producto 1</h3>
+                        <p class="product-price">$19.99</p>
+                        <button class="add-to-cart-btn" onclick="addToCart('Producto 1', 19.99)">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="Imagenes/Historia de Instagram Gimnasio gym Entrenamiento Moderno.jpg" alt="Producto 2" />
+                    <div class="product-info">
+                        <h3 class="product-name">Producto 2</h3>
+                        <p class="product-price">$29.99</p>
+                        <button class="add-to-cart-btn" onclick="addToCart('Producto 2', 29.99)">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="Imagenes/Historia de Instagram Frase de Gimnasio Tipográfico Verde y Negro.jpg" alt="Producto 3" />
+                    <div class="product-info">
+                        <h3 class="product-name">Producto 3</h3>
+                        <p class="product-price">$39.99</p>
+                        <button class="add-to-cart-btn" onclick="addToCart('Producto 3', 39.99)">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cart" class="cart-section">
+            <h2>Tu Carrito</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">Total: $<span id="cart-total">0.00</span></div>
+            <button class="checkout-btn" onclick="checkout()" id="checkout-btn">
+                Finalizar compra por WhatsApp
+            </button>
+            <button class="add-to-cart-btn" onclick="showSection('products')">
+                Seguir comprando
+            </button>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2>Contacto y Soporte</h2>
+            <p>📧 Email: soporte@tiendakenneldiaz.com<thinking>
+The attempt to overwrite the entire index.html file failed due to the large content replacement. Instead, I should perform a precise search and replace with smaller chunks to modify the file incrementally.
+
+I will first add or modify the meta viewport tag and title in the head section, then proceed with other changes step by step.
+
+Next step: Perform a targeted search and replace to update the meta viewport tag and title in index.html.
+</thinking>
+
+<create_file>
+<path>index.html</path>
+<content>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tienda en Línea KennelDiaz</title>
+    <title>Tienda KennelDiaz - Móvil</title>
     <link rel="stylesheet" href="styles.css" />
     <script>
         // Cart functionality with quantity and WhatsApp checkout
@@ -141,14 +522,14 @@
                 <!-- Más productos pueden ser añadidos aquí -->
             </div>
         </section>
-        <section id="cart" class="cart-section">
+        <section id="cart" class="cart-section" style="display:none;">
             <h2>Tu Carrito</h2>
             <ul id="cart-items"></ul>
             <p>Total: $<span id="cart-total">0.00</span></p>
             <button id="close-cart">Seguir comprando</button>
             <button id="checkout-btn" disabled>Finalizar compra</button>
         </section>
-        <section id="contact" class="contact-section">
+        <section id="contact" class="contact-section" style="display:none;">
             <h2>Contacto y Soporte</h2>
             <p>Para consultas o soporte, contáctanos vía correo electrónico o teléfono.</p>
             <p>Email: soporte@tiendakenneldiaz.com</p>
